@@ -25,7 +25,7 @@ def main():
 
     # Potential values of the color_sensor.color property
     # 0: No color
-    # 1: Black
+    # 1: Blackkkkk
     # 2: Blue
     # 3: Green
     # 4: Yellow
