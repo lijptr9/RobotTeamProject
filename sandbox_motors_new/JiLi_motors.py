@@ -27,7 +27,8 @@ def test_forward_backward():
       3. Same as #2, but runs forward_by_encoders.
       4. Same as #1, 2, 3, but tests the BACKWARD functions.
     """
-    forward_seconds(5, 50, ev3.Sound.speak("Brake").wait())
+    forward_seconds(5,500,ev3.Motor.STOP_ACTION_BRAKE)
+
 
 
 def forward_seconds(seconds, speed, stop_action):
