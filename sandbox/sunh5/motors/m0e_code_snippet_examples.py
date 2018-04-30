@@ -64,3 +64,5 @@ def using_the_concise_property_shorthand_vs_verbose():
 
     # Concise way to set properties then run a command (recommended).
     left_motor.run_timed(speed_sp=500, time_sp=3000, stop_action="brake")
+
+simple_drive(100, 100, 10)

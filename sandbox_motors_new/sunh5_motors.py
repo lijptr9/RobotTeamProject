@@ -1,7 +1,7 @@
 """
 Functions for SPINNING the robot LEFT and RIGHT.
 Authors: David Fisher, David Mutchler and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # DONE: 1. Haoxuan Sun.
 
 # TODO: 2. Implment spin_left_seconds, then the relevant part of the test function.
 #          Test and correct as needed.
@@ -28,6 +28,7 @@ def test_spin_left_spin_right():
       3. Same as #2, but runs spin_left_by_encoders.
       4. Same as #1, 2, 3, but tests the spin_right functions.
     """
+    
 
 
 def spin_left_seconds(seconds, speed, stop_action):
