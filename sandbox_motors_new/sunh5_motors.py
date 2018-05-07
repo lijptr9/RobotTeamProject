@@ -34,17 +34,18 @@ def test_spin_left_spin_right():
     assert left_motor.connected
     assert right_motor.connected
     time_s = 3
-    while time_s !=0 :
+    while time_s != 0:
         left_sp=int(100)
         right_sp=int(-100)
         left_motor.run_forever(speed_sp=left_sp)
         right_motor.run_forever(speed_sp=right_sp)
-        time_s-=1
-        if time_s == 0:
-            break
+        time.sleep(time_s)
+        left_motor.stop()
+        right_motor.stop()
 
-        left_motor.stop(stop_action='break')
-        right_motor.stop(stop_action='break')
+
+        # left_motor.stop(stop_action="break")
+        # right_motor.stop(stop_action="break")
 
 
 
@@ -56,6 +57,12 @@ def spin_left_seconds(seconds, speed, stop_action):
     where speed is between -100 (full speed spin_right) and 100 (full speed spin_left).
     Uses the given stop_action.
     """
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    assert left_motor.connected
+    assert right_motor.connected
+    time_s =seconds
+
 
 
 def spin_left_by_time(degrees, speed, stop_action):
