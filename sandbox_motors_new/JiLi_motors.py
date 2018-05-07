@@ -1,7 +1,7 @@
 """
 Functions for moving the robot FORWARD and BACKWARD.
-Authors: David Fisher, David Mutchler and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher, David Mutchler and Ji Li.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # TODO: 2. Implment forward_seconds, then the relevant part of the test function.
 #          Test and correct as needed.
@@ -27,6 +27,11 @@ def test_forward_backward():
       3. Same as #2, but runs forward_by_encoders.
       4. Same as #1, 2, 3, but tests the BACKWARD functions.
     """
+    forward_seconds(8,200,ev3.Motor.STOP_ACTION_BRAKE)
+    forward_by_time(10, 400, ev3.Motor.STOP_ACTION_BRAKE)
+    backward_seconds(5, 200, ev3.Motor.STOP_ACTION_BRAKE)
+    backward_by_time(10, 600, ev3.Motor.STOP_ACTION_BRAKE)
+
 
 
 def forward_seconds(seconds, speed, stop_action):
@@ -35,7 +40,14 @@ def forward_seconds(seconds, speed, stop_action):
     where speed is between -100 (full speed backward) and 100 (full speed forward).
     Uses the given stop_action.
     """
-
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    print("Driving in", speed,'degree per second for', seconds,'second')
+    left_motor.run_forever(speed_sp = speed)
+    right_motor.run_forever(speed_sp = speed)
+    time.sleep(seconds)
+    left_motor.stop(stop_action= stop_action)
+    right_motor.stop(stop_action= stop_action)
 
 def forward_by_time(inches, speed, stop_action):
     """
@@ -47,6 +59,15 @@ def forward_by_time(inches, speed, stop_action):
       2. Sleep for the computed number of seconds.
       3. Stop moving.
     """
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    print('Driving for', inches,'inches with',speed,'degree per second')
+    left_motor.run_forever(speed_sp = speed)
+    right_motor.run_forever(speed_sp = speed)
+    seconds = (inches/4)*360/((speed**2)**(1/2))
+    time.sleep(seconds)
+    left_motor.stop(stop_action= stop_action)
+    right_motor.stop(stop_action= stop_action)
 
 
 def forward_by_encoders(inches, speed, stop_action):
@@ -59,12 +80,15 @@ def forward_by_encoders(inches, speed, stop_action):
     """
 
 
+
 def backward_seconds(seconds, speed, stop_action):
     """ Calls forward_seconds with negative speeds to achieve backward motion. """
+    forward_seconds(seconds, -speed,stop_action)
 
 
 def backward_by_time(inches, speed, stop_action):
     """ Calls forward_by_time with negative speeds to achieve backward motion. """
+    forward_by_time(inches, -speed, stop_action)
 
 
 def backward_by_encoders(inches, speed, stop_action):
