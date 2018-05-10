@@ -163,7 +163,7 @@ def wait_for_press():
        2. Sleeps for a small amount (say, 0.05 seconds).
     """
     # -------------------------------------------------------------------------
-    # TODO: 4.  Implement and test this function.
+    # DONE: 4.  Implement and test this function.
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
 
