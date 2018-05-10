@@ -4,8 +4,8 @@ This module lets you practice refactoring code to use a shared library.  The cod
 The team should work together and pick one team member to type code into libs/robot_controller.py to create a
 constructor and a method called drive_inches.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Ji Li.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # TODO: 2. On your computer right click on the libs folder in PyCharm, select Mark Directory as... Sources Root
 #   That should fix the error on the import robot_controller as robo line below (expand the imports below)
@@ -56,7 +56,7 @@ def main():
         if inches_target == 0:
             break
 
-        robot.drive_inches(inches_target, speed_deg_per_second)
+        robot.forward(inches_target, speed_deg_per_second)
         ev3.Sound.beep().wait()  # Fun little beep
 
     print("Goodbye!")

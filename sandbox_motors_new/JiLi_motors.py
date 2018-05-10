@@ -78,7 +78,15 @@ def forward_by_encoders(inches, speed, stop_action):
       1. Compute the number of degrees the wheels should spin to achieve the desired distance.
       2. Move until the computed number of degrees is reached.
     """
-
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    print("Driving in", speed, 'degree per second for', inches, 'inches')
+    left_motor.run_forever(speed_sp=speed)
+    right_motor.run_forever(speed_sp=speed)
+    seconds = (inches*90)/speed
+    time.sleep(seconds)
+    left_motor.stop(stop_action=stop_action)
+    right_motor.stop(stop_action=stop_action)
 
 
 def backward_seconds(seconds, speed, stop_action):
@@ -93,6 +101,7 @@ def backward_by_time(inches, speed, stop_action):
 
 def backward_by_encoders(inches, speed, stop_action):
     """ Calls forward_by_encoders with negative speeds to achieve backward motion. """
+    forward_by_encoders(inches, -speed, stop_action)
 
 
 test_forward_backward()
