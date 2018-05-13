@@ -3,7 +3,7 @@ Functions for moving the robot FORWARD and BACKWARD.
 Authors: David Fisher, David Mutchler and Ji Li.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Implment forward_seconds, then the relevant part of the test function.
+# DONE: 2. Implment forward_seconds, then the relevant part of the test function.
 #          Test and correct as needed.
 #   Then repeat for forward_by_time.
 #   Then repeat for forward_by_encoders.
@@ -27,10 +27,12 @@ def test_forward_backward():
       3. Same as #2, but runs forward_by_encoders.
       4. Same as #1, 2, 3, but tests the BACKWARD functions.
     """
-    forward_seconds(8,200,ev3.Motor.STOP_ACTION_BRAKE)
-    forward_by_time(10, 400, ev3.Motor.STOP_ACTION_BRAKE)
-    backward_seconds(5, 200, ev3.Motor.STOP_ACTION_BRAKE)
-    backward_by_time(10, 600, ev3.Motor.STOP_ACTION_BRAKE)
+    forward_seconds(4,100,ev3.Motor.STOP_ACTION_BRAKE)
+    forward_by_time(10, 50, ev3.Motor.STOP_ACTION_BRAKE)
+    forward_by_encoders(12, 60, ev3.Motor.STOP_ACTION_BRAKE)
+    backward_seconds(5, 100, ev3.Motor.STOP_ACTION_BRAKE)
+    backward_by_time(10, 50, ev3.Motor.STOP_ACTION_BRAKE)
+    backward_by_encoders(5, 50, ev3.Motor.STOP_ACTION_BRAKE)
 
 
 
@@ -42,6 +44,7 @@ def forward_seconds(seconds, speed, stop_action):
     """
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
     right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    speed = speed*8
     print("Driving in", speed,'degree per second for', seconds,'second')
     left_motor.run_forever(speed_sp = speed)
     right_motor.run_forever(speed_sp = speed)
@@ -61,6 +64,7 @@ def forward_by_time(inches, speed, stop_action):
     """
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
     right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    speed = speed*8
     print('Driving for', inches,'inches with',speed,'degree per second')
     left_motor.run_forever(speed_sp = speed)
     right_motor.run_forever(speed_sp = speed)
@@ -80,13 +84,18 @@ def forward_by_encoders(inches, speed, stop_action):
     """
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
     right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-    print("Driving in", speed, 'degree per second for', inches, 'inches')
-    left_motor.run_forever(speed_sp=speed)
-    right_motor.run_forever(speed_sp=speed)
-    seconds = (inches*90)/speed
-    time.sleep(seconds)
-    left_motor.stop(stop_action=stop_action)
-    right_motor.stop(stop_action=stop_action)
+
+    assert left_motor.connected
+    assert right_motor.connected
+
+    speed= speed*8
+
+    distance = inches * 90
+    left_motor.run_to_rel_pos(position_sp=distance, speed_sp=speed, stop_action=stop_action)
+    right_motor.run_to_rel_pos(position_sp=distance, speed_sp=speed, stop_action=stop_action)
+
+    left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+    right_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
 
 def backward_seconds(seconds, speed, stop_action):

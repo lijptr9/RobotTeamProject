@@ -42,7 +42,7 @@ import ev3dev.ev3 as ev3
 import time
 
 
-# TODO: 2. Within the MyDelegate class below add the method, set_led, to receive messages as described above.
+# DONE: 2. Within the MyDelegate class below add the method, set_led, to receive messages as described above.
 # Here is some code that will likely be VERY useful in that method to convert the led_side_string and led_color_string
 #   into a useful led_side and led_color values that can be used with the ev3.Leds.set_color method.
 #
@@ -102,10 +102,13 @@ def main():
     print("--------------------------------------------")
     ev3.Sound.speak("LED Button communication").wait()
 
-    # TODO: 3. Create an instance of your delegate class and an MQTT client, passing in the delegate object.
+    # DONE: 3. Create an instance of your delegate class and an MQTT client, passing in the delegate object.
     # Note: you can determine the variable names that you should use by looking at the errors underlined in later code.
     # Once you have that done connect the mqtt_client to the MQTT broker using the connect_to_pc method.
     # Note: on EV3 you call connect_to_pc, but in the PC code it will call connect_to_ev3
+    my_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_pc()
 
 
     # Buttons on EV3 (these obviously assume TO DO: 3. is done)
