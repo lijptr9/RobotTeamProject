@@ -225,7 +225,10 @@ def make_sounds():
     """
     rc = ev3.RemoteControl(2)
 
-    while rc.red_up
+    while True:
+        state=rc.red_up.is_pressed
+
+
 
 
 # -----------------------------------------------------------------------------
