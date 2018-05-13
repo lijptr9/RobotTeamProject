@@ -192,6 +192,10 @@ def wait_for_RED_DOWN_button_press():
     # TODO: 4.  Implement and test this function.
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
+    rc = ev3.RemoteControl(2)
+
+
+
 
 
 def run_test_make_sounds():
@@ -219,6 +223,9 @@ def make_sounds():
               "/home/robot/csse120/assets/sounds/awesome_pcm.wav"
        -- BLUE_DOWN button:  The program breaks out of the loop.
     """
+    rc = ev3.RemoteControl(2)
+
+    while rc.red_up
 
 
 # -----------------------------------------------------------------------------
