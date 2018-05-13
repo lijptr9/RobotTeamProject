@@ -99,6 +99,6 @@ def quit_program(mqtt_client):
 
 
 # ----------------------------------------------------------------------
-# Calls  main  to start the ball rolling.
+# Calls  main,  to start the ball rolling.
 # ----------------------------------------------------------------------
 main()
