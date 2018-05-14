@@ -26,7 +26,7 @@ class Snatch3r(object):
         assert self.left_motor.connected
         assert self.right_motor.connected
 
-        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_D)
         assert self.arm_motor.connected
 
         self.ir_sensor = ev3.InfraredSensor()
