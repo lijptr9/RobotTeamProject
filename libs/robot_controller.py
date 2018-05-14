@@ -28,7 +28,6 @@ class Snatch3r(object):
 
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert self.arm_motor.connected
-]
 
 
 
