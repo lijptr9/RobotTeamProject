@@ -29,12 +29,19 @@ class Snatch3r(object):
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert self.arm_motor.connected
 
+        self.ir_sensor = ev3.InfraredSensor()
+        assert self.ir_sensor
 
-
+        self.color_sensor = ev3.ColorSensor()
+        assert self.color_sensor
 
 
         self.touch_sensor = ev3.TouchSensor()
         assert self.touch_sensor
+
+        self.pwr = ev3.PowerSupply()
+
+        self.running = True
 
 
     def forward(self, inches, speed=100, stop_action= 'brake'):
@@ -45,6 +52,25 @@ class Snatch3r(object):
 
         self.left_motor.wait_while('running')
         self.right_motor.wait_while('running')
+
+    def loop_forever(self):
+        self.running = True
+        while self.running:
+            #   "Self Defense" mode developed by Shengbo Zou
+            if self.ir_sensor.proximity < 10:
+                self.pinch()
+                ev3.Sound.speak("Don't touch me. Now back off").wait()
+                time.sleep(1.5)
+                self.release()
+            time.sleep(0.1)
+
+    def pinch(self):
+        self.arm_motor.run_forever(speed_sp=900)
+        time.sleep(1.5)
+        self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+    def shut_down(self):
+        self.running = False
 
 
 
@@ -86,14 +112,12 @@ class Snatch3r(object):
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)  # Blocks until the motor finishes running
         ev3.Sound.beep()
 
-    def loop_forever(self):
-        # This is a convenience method that I don't really recommend for most programs other than m5.
-        #   This method is only useful if the only input to the robot is coming via mqtt.
-        #   MQTT messages will still call methods, but no other input or output happens.
-        # This method is given here since the concept might be confusing.
-        self.running = True
-        while self.running:
-            time.sleep(0.1)
+    def release(self):
+        self.arm_motor.run_forever(speed_sp=-900)
+        time.sleep(1.5)
+        self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+
+
 
     def shutdown(self):
         # Modify a variable that will allow the loop_forever method to end. Additionally stop motors and set LEDs green.
