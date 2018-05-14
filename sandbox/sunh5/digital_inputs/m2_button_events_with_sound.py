@@ -8,8 +8,8 @@ the more complex callback approach that uses lamdba when data needs to be shared
 Since this module is all about the buttons the Sound code has just been provided as a finished
 example.  You will call different Sound functions using different buttons.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Haoxuan Sun.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -19,6 +19,8 @@ import time
 # There is currently no way to exit this program, so you will have to manually exit the program using your keyboard.
 #   Hit Control C to exit the program when you are done running it.  Ctrl c is a KeyboardInterrupt.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
+#from examples.digital_inputs.button_event_callbacks import handle_down_button, handle_left_button, handle_right_button
+
 
 class DataContainer(object):
     """ Helper class that might be useful to communicate between different callbacks."""
@@ -51,6 +53,28 @@ def main():
     #   .on_right to call handle_right_button (that function does not exist yet, you will write it in todo4)
     # Here is one for free...
     #  btn.on_up = handle_up_button
+    def handle_down_button1(button_state):
+        """Handle IR / button event."""
+        if button_state:
+            play_song_by_notes_list()
+            print("down button is pressed")
+        else:
+            print("down button was released")
+
+    def handle_left_button1(button_state):
+        """Handle IR / button event."""
+        if button_state:
+            speak()
+
+    def handle_right_button1(button_state):
+        """Handle IR / button event."""
+        if button_state:
+            play_wav_file()
+
+    btn.on_up = handle_up_button
+    btn.on_down = handle_down_button1
+    btn.on_left = handle_left_button1
+    btn.on_right = handle_right_button1
 
     # TODO: 5. Note #4 is lower (this is TO DO #5 which you should do after #4).
     # Add a lambda callback for on_backspace.  The syntax of lambda is:
@@ -90,6 +114,8 @@ def handle_up_button(button_state):
         print("Up button was released")
 
 
+
+
 # TODO: 6. Implement the handle_shutdown function.
 #   Function signature should be:
 #       def handle_shutdown(button_state, dc):
@@ -102,7 +128,10 @@ def handle_up_button(button_state):
 # You can also change the print message that said:
 #    "Press Ctrl C on your keyboard to exit this program (the Back button is not wired up to exit)"
 # to instead say "Press Back to exit this program."
-
+def handle_shutdown(button_state, dc):
+    if button_state:
+        print('back')
+        dc.running = False
 
 # TODO: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
 #
