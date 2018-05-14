@@ -29,8 +29,6 @@ class Snatch3r(object):
         assert self.touch_sensor.connected
 
     def drive_inches(self, distance, speed):
-        """make the robot drive a given distane by a given speed, if the
-        distance is negative, robot drive backward by the same speed."""
         assert self.left_motor.connected
         assert self.right_motor.connected
 
@@ -47,7 +45,6 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def turn_degrees(self, degree, speed):
-        """make the robot turn a certain degree at give speed """
         assert self.left_motor.connected
         assert self.right_motor.connected
         self.left_motor.run_to_rel_pos(position_sp=degree*450/90, speed_sp=speed)
@@ -57,7 +54,6 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def stop(self):
-        """stop the left and right motor of the robots"""
         assert self.left_motor.connected
         assert self.right_motor.connected
         self.right_motor.stop()
@@ -98,7 +94,6 @@ class Snatch3r(object):
         pressed. and the two led turn green"""
         btn = ev3.Button()
         while btn.backspace:
-            """do we need this while loop here?"""
             self.stop()
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
@@ -106,28 +101,24 @@ class Snatch3r(object):
             print('Goodbye')
 
     def go_forward(self, left_motor_speed, right_motor_speed):
-        """make the robot run forward forever"""
         assert self.left_motor.connected
         assert self.right_motor.connected
         self.left_motor.run_forever(speed_sp=left_motor_speed)
         self.right_motor.run_forever(speed_sp=right_motor_speed)
 
     def go_back(self, left_motor_speed, right_motor_speed):
-        """maek the robot run backward forever"""
         assert self.left_motor.connected
         assert self.right_motor.connected
         self.left_motor.run_forever(speed_sp=-left_motor_speed)
         self.right_motor.run_forever(speed_sp=-right_motor_speed)
 
     def turn_right(self, left_motor_speed, right_motor_speed):
-        """make the robot turn right forever"""
         assert self.left_motor.connected
         assert self.right_motor.connected
         self.left_motor.run_forever(speed_sp=left_motor_speed)
         self.right_motor.run_forever(speed_sp=-right_motor_speed)
 
     def turn_left(self, left_motor_speed, right_motor_speed):
-        """make the robot turn left forever"""
         assert self.left_motor.connected
         assert self.right_motor.connected
         self.left_motor.run_forever(speed_sp=-left_motor_speed)
