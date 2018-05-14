@@ -8,7 +8,7 @@ directly as the delegate to the MQTT client.
 
 The code below is all correct.  The loop_forever line will cause a crash right now.  You need to implement that function
 in the Snatch3r class in the library (remember the advice from the lecture).  Pick one team member to implement it then
-have everyone else Git update.  Here is some advice for the Snatch3r method loop_forever and it's partner, shutdown.
+have everyone else Git update.  Here is some advice tfor the Snatch3r method loop_forever and it's partner, shutdown.
 
     def loop_forever(self):
         # This is a convenience method that I don't really recommend for most programs other than m5.
