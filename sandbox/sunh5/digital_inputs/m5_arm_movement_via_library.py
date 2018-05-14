@@ -14,7 +14,7 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 
 # TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet and do a code review of your library.
 #
-# Observations you should make, you are a TEAM and making great library methods will make life easier for everyone.
+# Observations you should make,, you are a TEAM and making great library methods will make life easier for everyone.
 
 import ev3dev.ev3 as ev3
 import robot_controller as robo
