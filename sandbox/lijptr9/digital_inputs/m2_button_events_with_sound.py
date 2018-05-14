@@ -8,8 +8,8 @@ the more complex callback approach that uses lamdba when data needs to be shared
 Since this module is all about the buttons the Sound code has just been provided as a finished
 example.  You will call different Sound functions using different buttons.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Ji Li.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -44,20 +44,25 @@ def main():
     # Buttons on EV3 (we keep giving you this line, but you could have typed it)
     btn = ev3.Button()
 
-    # TODO: 3. Just below this comment add SIMPLE (no lambda) callbacks for:
+    # DONE: 3. Just below this comment add SIMPLE (no lambda) callbacks for:
     #   .on_up to call handle_up_button (that function already exist below, you will modify it in todo4)
     #   .on_down to call handle_down_button (that function does not exist yet, you will write it in todo4)
     #   .on_left to call handle_left_button (that function does not exist yet, you will write it in todo4)
     #   .on_right to call handle_right_button (that function does not exist yet, you will write it in todo4)
     # Here is one for free...
     #  btn.on_up = handle_up_button
+    btn.on_up = handle_up_button
+    btn.on_down = handle_down_button
+    btn.on_left = handle_left_button
+    btn.on_right = handle_right_button
 
-    # TODO: 5. Note #4 is lower (this is TO DO #5 which you should do after #4).
+    # DONE: 5. Note #4 is lower (this is TO DO #5 which you should do after #4).
     # Add a lambda callback for on_backspace.  The syntax of lambda is:
     #   btn.on_backspace = lamdba predefined_inputs: function_name(parameters)
     # You will need to change the predefined_inputs, function_name, and parameters from that syntax template.
     # Using lambda call the function handle_shutdown passing in the state and dc
     # Note: the function handle_shutdown does not exist yet, you will write it in todo6.
+    btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     while dc.running:
         btn.process()  # This command is VERY important when using button callbacks!
@@ -71,7 +76,7 @@ def main():
 # Button event callback functions
 # ----------------------------------------------------------------------
 
-# TODO: 4. Implement the up, down, left, and right callback functions as follows:
+# DONE: 4. Implement the up, down, left, and right callback functions as follows:
 #   handle_up_button - when state is True (a press), call play_song_by_individual_tones()
 #     You can leave the print messages below, just add the new requirement stated above.
 #   handle_down_button - when state is True (a press), call play_song_by_notes_list()
@@ -86,11 +91,33 @@ def handle_up_button(button_state):
     """Handle IR / button event."""
     if button_state:
         print("Up button is pressed")
+        play_song_by_individual_tones()
     else:
         print("Up button was released")
 
+def handle_down_button(button_state):
+    if button_state:
+        print("Down button is pressed")
+        play_song_by_notes_list()
+    else:
+        print("Down button was released")
 
-# TODO: 6. Implement the handle_shutdown function.
+def handle_left_button(button_state):
+    if button_state:
+        print("Left button is pressed")
+        speak()
+    else:
+        print("Left button was released")
+
+def handle_right_button(button_state):
+    if button_state:
+        print("Right button is pressed")
+        play_wav_file()
+    else:
+        print("Right button was released")
+
+
+# DONE: 6. Implement the handle_shutdown function.
 #   Function signature should be:
 #       def handle_shutdown(button_state, dc):
 #   When the button is pressed (state is True)
@@ -102,6 +129,12 @@ def handle_up_button(button_state):
 # You can also change the print message that said:
 #    "Press Ctrl C on your keyboard to exit this program (the Back button is not wired up to exit)"
 # to instead say "Press Back to exit this program."
+def handle_shutdown(state,dc):
+    if state:
+        print("back")
+        dc.running = False
+    else:
+        print("Press Back to exit this program")
 
 
 # TODO: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
@@ -154,11 +187,9 @@ def play_song_by_notes_list():
     ev3.Sound.tone([
         (392, 350, 100), (392, 350, 100), (392, 350, 100), (311.1, 250, 100),
         (466.2, 25, 100), (392, 350, 100), (311.1, 250, 100), (466.2, 25, 100),
-        (392, 700, 100)  # Commented out the rest of the song to make testing faster.
-
-        # , (587.32, 350, 100), (587.32, 350, 100),
-        # (587.32, 350, 100), (622.26, 250, 100), (466.2, 25, 100),
-        # (369.99, 350, 100), (311.1, 250, 100), (466.2, 25, 100), (392, 700, 100),
+        (392, 700, 100), (587.32, 350, 100), (587.32, 350, 100),
+        (587.32, 350, 100), (622.26, 250, 100), (466.2, 25, 100),
+        (369.99, 350, 100), (311.1, 250, 100), (466.2, 25, 100), (392, 700, 100),
         # (784, 350, 100), (392, 250, 100), (392, 25, 100), (784, 350, 100),
         # (739.98, 250, 100), (698.46, 25, 100), (659.26, 25, 100),
         # (622.26, 25, 100), (659.26, 50, 400), (415.3, 25, 200), (554.36, 350, 100),
@@ -180,7 +211,7 @@ def speak():
     Example of using the speak command.  This is probably the most useful ev3.Sound feature.
     """
     ev3.Sound.speak("Everything is awesome!")  # This version does not wait for the sound to complete to continue
-    # ev3.Sound.speak("Everything is awesome!").wait()  # This version blocks future code execution until complete.
+    #ev3.Sound.speak("Everything is awesome!").wait()  # This version blocks future code execution until complete.
 
 
 def play_wav_file():
