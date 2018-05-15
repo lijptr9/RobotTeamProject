@@ -39,7 +39,7 @@ def main():
     mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
-    root.title("MQTT Remote")
+    root.title("Control Pad")
 
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
@@ -61,16 +61,15 @@ def main():
     # To help get you started the arm up and down buttons have been implemented.
     # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
     # out. You will need to change some_callback1 to some better name, then pattern match for other button / key combos.
+    # w: Forward; s: Backward; a: Turn left; d: Turn right; space: Stop; q: Arm down; e: Arm up;#
 
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=1)
-    # forward_button and '<Up>' key is done for your here...
     forward_button['command'] = lambda: send_forward(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<w>', lambda event: send_forward(mqtt_client, left_speed_entry, right_speed_entry))
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
-    # left_button and '<Left>' key
     left_button['command'] = lambda: send_left(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<a>', lambda event: send_left(mqtt_client, left_speed_entry, right_speed_entry))
 
@@ -82,7 +81,6 @@ def main():
 
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=3, column=2)
-    # right_button and '<Right>' key
     right_button['command'] = lambda: send_right(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<d>', lambda event: send_right(mqtt_client, left_speed_entry, right_speed_entry))
 
@@ -103,13 +101,13 @@ def main():
     root.bind('<q>', lambda event: send_down(mqtt_client))
 
     # Buttons for quit and exit
-    q_button = ttk.Button(main_frame, text="Quit")
-    q_button.grid(row=5, column=2)
-    q_button['command'] = (lambda: quit_program(mqtt_client, False))
+    quit_button = ttk.Button(main_frame, text="Quit")
+    quit_button.grid(row=5, column=2)
+    quit_button['command'] = (lambda: quit_program(mqtt_client, False))
 
-    e_button = ttk.Button(main_frame, text="Exit")
-    e_button.grid(row=6, column=2)
-    e_button['command'] = (lambda: quit_program(mqtt_client, True))
+    exit_button = ttk.Button(main_frame, text="Exit")
+    exit_button.grid(row=6, column=2)
+    exit_button['command'] = (lambda: quit_program(mqtt_client, True))
 
     root.mainloop()
 

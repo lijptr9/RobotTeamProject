@@ -58,6 +58,7 @@ class Snatch3r(object):
         assert self.right_motor.connected
         self.right_motor.stop()
         self.left_motor.stop()
+        ev3.Sound.beep().wait()
 
     def arm_calibration(self):
         """calibrate the robot arm """
@@ -68,7 +69,7 @@ class Snatch3r(object):
             time.sleep(0.01)
         self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         ev3.Sound.beep().wait()
-        self.arm_motor.run_to_rel_pos(position_sp=-2000, speed_sp=900)
+        self.arm_motor.run_to_rel_pos(position_sp=0, speed_sp=900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
         self.arm_motor.position = 0
@@ -90,14 +91,12 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def shutdown(self):
-        """make the robot shutdown when the ev3's backspace bottom is
-        pressed. and the two led turn green"""
         btn = ev3.Button()
         while btn.backspace:
             self.stop()
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-            ev3.Sound.speak('goodbye').wait()
+            ev3.Sound.speak("good game").wait()
             print('Goodbye')
 
     def go_forward(self, left_motor_speed, right_motor_speed):
