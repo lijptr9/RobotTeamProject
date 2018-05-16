@@ -119,10 +119,13 @@ class Snatch3r(object):
 
 
     def exit(self):
+        self.running = False
+
         self.left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        self.running = False
+        exit()
+
 
     def go_forward(self, left_motor_speed, right_motor_speed):
         """make the robot run forward forever"""
@@ -193,17 +196,17 @@ class Snatch3r(object):
     #                 self.turn_right(forward_speed, forward_speed)
     #                 time.sleep(0.1)
     #                 print("Heading is too far off to fix: ", current_heading)
+    #
+        #     time.sleep(0.2)
+        # print("Abandon ship!")
+        # self.stop()
+        # return False
 
-            time.sleep(0.2)
-        print("Abandon ship!")
-        self.stop()
-        return False
-
-    def find_beacon(self):
-        while True:
-            found_beacon = self.seek_beacon()
-            if found_beacon:
-                self.arm_up()
+    # def find_beacon(self):
+    #     while True:
+    #         found_beacon = self.seek_beacon()
+    #         if found_beacon:
+    #             self.arm_up()
 
     def play_music(self):
         ev3.Sound.play("/home/robot/csse120/assets/sounds/L.wav")
