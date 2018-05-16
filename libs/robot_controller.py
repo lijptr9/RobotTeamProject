@@ -83,7 +83,7 @@ class Snatch3r(object):
             time.sleep(0.01)
         self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         ev3.Sound.beep().wait()
-        self.arm_motor.run_to_rel_pos(position_sp=-5112, speed_sp=900)
+        self.arm_motor.run_to_rel_pos(position_sp=0, speed_sp=900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
         self.arm_motor.position = 0
@@ -102,7 +102,7 @@ class Snatch3r(object):
     def arm_down(self):
         """make the robot's arm going down"""
         assert self.arm_motor.connected
-        self.arm_motor.run_to_abs_pos(position_sp=-3000, speed_sp=-900)
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=-900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
