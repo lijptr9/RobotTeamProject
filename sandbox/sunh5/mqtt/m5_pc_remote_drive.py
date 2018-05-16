@@ -165,7 +165,7 @@ def send_down(mqtt_client):
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
         print("shutdown")
-        mqtt_client.send_message("exit")
+        mqtt_client.send_message("shut_down")
     mqtt_client.close()
     exit()
 

@@ -117,7 +117,7 @@ class Snatch3r(object):
             ev3.Sound.speak('goodbye').wait()
             print('Goodbye')
 
-    def exit(self):
+    def shut_down(self):
         self.running = False
 
     def go_forward(self, left_motor_speed, right_motor_speed):
