@@ -77,14 +77,34 @@ def follow_the_line(robot, white_level, black_level):
       :type black_level: int
     """
 
-    # TODO: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
+    # DONE: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
     # should drive straight or turn to the right.  You will need to test and refine your code until it works well.
     # Optional extra - For a harder challenge could you drive on the black line and handle left or right turns?
+
+    # while not robot.touch_sensor.is_pressed:
+    #
+    #     if robot.color_sensor.reflected_light_intensity > black_level+0.2*white_level:
+    #         init_col = robot.color_sensor.reflected_light_intensity
+    #         robot.constant_moving(300, -300)
+    #         time.sleep(0.2)
+    #         robot.stop()
+    #         if robot.color_sensor.reflected_light_intensity < init_col:
+    #             robot.constant_moving(300, -300)
+    #             time.sleep(0.4)
+    #             robot.stop()
+    #         else:
+    #             robot.constant_moving(-300, 300)
+    #             time.sleep(0.6)
+    #             robot.stop()
+    #     else:
+    #         robot.constant_moving(300, 300)
+
     print('300')
-    while robot.color_sensor.reflected_light_intensity < white_level:
+    while not robot.touch_sensor.is_pressed:
         print('300,300')
-        robot.constant_moving(300, 300)
-        if robot.touch_sensor.is_pressed:
+        init = robot.color_sensor.reflected_light_intensity
+        robot.constant_moving(300, -300)
+        if robot.color_sensor.reflected_light_intensity > init+5:
             robot.stop()
 
     robot.stop()
