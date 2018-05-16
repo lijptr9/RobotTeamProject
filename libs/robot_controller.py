@@ -68,7 +68,6 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def stop(self):
-        """stop the left and right motor of the robots"""
         assert self.left_motor.connected
         assert self.right_motor.connected
         ev3.Sound.beep().wait()
