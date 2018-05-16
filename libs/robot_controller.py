@@ -119,7 +119,7 @@ class Snatch3r(object):
             ev3.Sound.speak('goodbye').wait()
             print('Goodbye')
 
-    def forward_button(self, left_motor_speed, right_motor_speed):
+    def go_forward(self, left_motor_speed, right_motor_speed):
         """make the robot run forward forever"""
         assert self.left_motor.connected
         assert self.right_motor.connected
