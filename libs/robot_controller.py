@@ -53,7 +53,6 @@ class Snatch3r(object):
             distance=distance*90
         self.left_motor.run_to_rel_pos(speed_sp=speed, position_sp=distance)
         self.right_motor.run_to_rel_pos(speed_sp=speed,position_sp=distance)
-        """.run_to_rel_pos we dont need the stop action"""
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
@@ -72,6 +71,7 @@ class Snatch3r(object):
         """stop the left and right motor of the robots"""
         assert self.left_motor.connected
         assert self.right_motor.connected
+        ev3.Sound.beep().wait()
         self.right_motor.stop()
         self.left_motor.stop()
 
@@ -112,7 +112,6 @@ class Snatch3r(object):
         pressed. and the two led turn green"""
         btn = ev3.Button()
         while btn.backspace:
-            """do we need this while loop here?"""
             self.stop()
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
