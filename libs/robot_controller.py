@@ -156,8 +156,8 @@ class Snatch3r(object):
         self.right_motor.run_forever(speed_sp=right_motor_speed)
 
     def  loop_forever(self):
-        self.running = True
         while True:
+            self.running = True
             time.sleep(0.01)
 
     # def seek_beacon(self):
