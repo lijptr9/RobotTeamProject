@@ -123,6 +123,8 @@ def start_path(drawer, mqtt_client):
                                                   900])
         print(angle_new_list[k], drawer.distance_list[k])
 
+
+
         # mqtt_client.send_message("new_run_path", [angle_new_list, drawer.distance_list])
 
 
