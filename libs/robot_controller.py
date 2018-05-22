@@ -121,9 +121,9 @@ class Snatch3r(object):
     def exit(self):
         self.running = False
 
-        # self.left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        # self.right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-        # self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         exit()
 
 
@@ -157,7 +157,7 @@ class Snatch3r(object):
 
     def  loop_forever(self):
         self.running = True
-        while self.running:
+        while True:
             time.sleep(0.01)
 
     # def seek_beacon(self):
