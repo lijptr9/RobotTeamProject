@@ -18,7 +18,7 @@ class Drawer(object):
                                 width=1)
 
     def set_point(self, x, y):
-        # set event.x and event.y to be the start point
+        # set event.x and event. y to be the start point
         self.start_x = x
         self.start_y = y
 
