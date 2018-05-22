@@ -225,3 +225,9 @@ class Snatch3r(object):
     def constant_moving(self, l_speed, r_speed):
         self.left_motor.run_forever(speed_sp=l_speed)
         self.right_motor.run_forever(speed_sp=r_speed)
+
+
+#----------------------------------------------------------------------------------------------------------------------
+# JI LI
+
+    def go_fetch(self):
