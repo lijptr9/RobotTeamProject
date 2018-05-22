@@ -155,58 +155,58 @@ class Snatch3r(object):
         self.left_motor.run_forever(speed_sp=-left_motor_speed)
         self.right_motor.run_forever(speed_sp=right_motor_speed)
 
-    def  loop_forever(self):
-        self.running = True
+    def loop_forever(self):
         while True:
+            self.running = True
             time.sleep(0.01)
 
-    # def seek_beacon(self):
-    #     forward_speed = 300
-    #     turn_speed = 100
-    #     beacon_seeker = ev3.BeaconSeeker(channel=1)
-    #
-    #     while not self.touch_sensor.is_pressed:
-    #         current_heading = beacon_seeker.heading
-    #         current_distance = beacon_seeker.distance
-    #         if current_distance == -128:
-    #             print("IR Remote not found. Distance is -128")
-    #             self.turn_right(turn_speed, -turn_speed)
-    #         else:
-    #
-    #             if math.fabs(current_heading) < 2:
-    #                 if current_distance == 1:
-    #                     self.drive_inches(3, forward_speed)
-    #                     self.stop()
-    #                     print("Found the beacon!")
-    #                     return True
-    #                 print("On the right heading. Distance: ", current_distance)
-    #                 if current_distance > 1:
-    #                     self.go_forward(forward_speed, forward_speed)
-    #                     time.sleep(0.1)
-    #             if 2 < math.fabs(current_heading) < 10:
-    #                 if current_heading < 0:
-    #                     self.turn_left(turn_speed, turn_speed)
-    #                     time.sleep(0.1)
-    #                 if current_heading > 0:
-    #                     self.turn_right(turn_speed, turn_speed)
-    #                     time.sleep(0.1)
-    #                 print("Adjusting heading: ", current_heading)
-    #
-    #             if math.fabs(current_heading) > 10:
-    #                 self.turn_right(forward_speed, forward_speed)
-    #                 time.sleep(0.1)
-    #                 print("Heading is too far off to fix: ", current_heading)
-    #
-        #     time.sleep(0.2)
-        # print("Abandon ship!")
-        # self.stop()
-        # return False
+    def seek_beacon(self):
+        forward_speed = 300
+        turn_speed = 100
+        beacon_seeker = ev3.BeaconSeeker(channel=1)
 
-    # def find_beacon(self):
-    #     while True:
-    #         found_beacon = self.seek_beacon()
-    #         if found_beacon:
-    #             self.arm_up()
+        while not self.touch_sensor.is_pressed:
+            current_heading = beacon_seeker.heading
+            current_distance = beacon_seeker.distance
+            if current_distance == -128:
+                print("IR Remote not found. Distance is -128")
+                self.turn_right(turn_speed, -turn_speed)
+            else:
+
+                if math.fabs(current_heading) < 2:
+                    if current_distance == 1:
+                        self.drive_inches(3, forward_speed)
+                        self.stop()
+                        print("Found the beacon!")
+                        return True
+                    print("On the right heading. Distance: ", current_distance)
+                    if current_distance > 1:
+                        self.go_forward(forward_speed, forward_speed)
+                        time.sleep(0.1)
+                if 2 < math.fabs(current_heading) < 10:
+                    if current_heading < 0:
+                        self.turn_left(turn_speed, turn_speed)
+                        time.sleep(0.1)
+                    if current_heading > 0:
+                        self.turn_right(turn_speed, turn_speed)
+                        time.sleep(0.1)
+                    print("Adjusting heading: ", current_heading)
+
+                if math.fabs(current_heading) > 10:
+                    self.turn_right(forward_speed, forward_speed)
+                    time.sleep(0.1)
+                    print("Heading is too far off to fix: ", current_heading)
+
+            time.sleep(0.2)
+        print("Abandon ship!")
+        self.stop()
+        return False
+
+    def find_beacon(self):
+        while True:
+            found_beacon = self.seek_beacon()
+            if found_beacon:
+                self.arm_up()
 
     def play_music(self):
         ev3.Sound.play("/home/robot/csse120/assets/sounds/L.wav")
