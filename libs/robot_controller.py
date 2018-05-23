@@ -41,8 +41,6 @@ class Snatch3r(object):
 
 
     def drive_inches(self, distance, speed):
-        """make the robot drive a given distane by a given speed, if the
-        distance is negative, robot drive backward by the same speed."""
         assert self.left_motor.connected
         assert self.right_motor.connected
 
@@ -62,7 +60,7 @@ class Snatch3r(object):
         assert self.left_motor.connected
         assert self.right_motor.connected
         self.left_motor.run_to_rel_pos(position_sp=degree*450/90, speed_sp=speed)
-        self.right_motor.run_to_rel_pos(position_sp=-degree*450/90, speed_sp=speed)
+        self.right_motor.run_to_rel_pos(position_sp=-degree*350/90, speed_sp=speed)
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()

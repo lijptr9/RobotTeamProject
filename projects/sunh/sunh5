@@ -36,7 +36,93 @@ def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
 
-    # create a tkinter window
+
+
+    window2 = tkinter.Tk()
+    window2.title='EV3 Final Project'
+    main_frame2 = ttk.Frame(window2, padding=5)
+    main_frame2.grid()
+
+    canvas=tkinter.Canvas(main_frame2, background="white", width=500, height=400)
+    canvas.grid(columnspan=4)
+    canvas.grid(rowspan=4)
+
+    # filename = PhotoImage(file="new image - qva1l.jpg")
+    # image = canvas.create_image(50, 50, anchor=NE, image=filename)
+    canvas.create_text(250, 150, fill="darkblue", font="Times 20 italic bold",
+                            text="CSSE120 Final Project")
+    canvas.create_text(255, 180, fill="darkblue", font="Times 20 italic bold",
+                       text="Follow the Line")
+
+    continue_button = ttk.Button(main_frame2, text="Continue")
+    continue_button.grid(row=4, column=3)
+    continue_button['command']=lambda: next_window()
+
+    quit_button = ttk.Button(main_frame2, text="Quit")
+    quit_button.grid(row=4,column=1)
+    quit_button['command']=lambda: end(mqtt_client)
+    #
+    #
+    # # create a tkinter window
+    # window = tkinter.Tk()
+    # window.title = "EV3 controller"
+    #
+    # main_frame = ttk.Frame(window, padding=5)
+    # main_frame.grid()
+    #
+    # # set up the instruction and make a tkinter.Canvas
+    # instructions = "Click the window to make path for robot"
+    # label = ttk.Label(main_frame, text=instructions)
+    # label.grid(columnspan=2)
+    # canvas = tkinter.Canvas(main_frame, background="lightgray", width=900,
+    #                         height=600)
+    # canvas.grid(columnspan=2)
+    # drawer = Drawer(canvas)
+    #
+    # # make call back to add_path function
+    # canvas.bind("<ButtonPress-1>", lambda event: add_path(event, drawer))
+    #
+    # # close the canvas and the mqtt
+    # quit_button = ttk.Button(main_frame, text="Quit")
+    # quit_button.grid(row=3, column=0)
+    # quit_button["command"] = lambda: end(mqtt_client)
+    #
+    # # start the path we have
+    # start_button = ttk.Button(main_frame, text="Start")
+    # start_button.grid(row=3, column=1)
+    # start_button["command"] = lambda: start_path(drawer, mqtt_client)
+
+    # window().mainloop()
+    window2.mainloop()
+
+def next_window():
+    # canvas.
+    Window2()
+
+ # def Window1():
+ #     window2 = tkinter.Tk()
+ #     window2.title = 'EV3 Final Project'
+ #     main_frame2 = ttk.Frame(window2, padding=5)
+ #     main_frame2.grid()
+ #
+ #     canvas = tkinter.Canvas(main_frame2, background="white", width=500, height=400)
+ #     canvas.grid(columnspan=4)
+ #     canvas.grid(rowspan=4)
+ #
+ #     # filename = PhotoImage(file="new image - qva1l.jpg")
+ #     # image = canvas.create_image(50, 50, anchor=NE, image=filename)
+ #     canvas.create_text(250, 150, fill="darkblue", font="Times 20 italic bold",
+ #                        text="CSSE120 Final Project")
+ #     canvas.create_text(255, 180, fill="darkblue", font="Times 20 italic bold",
+ #                        text="Follow the Line")
+ #
+ #     continue_button = ttk.Button(main_frame2, text="Continue")
+ #     continue_button.grid(row=4, column=3)
+ #     # continue_button['command'] = lambda: next_window()
+
+def Window2():
+    mqtt_client = com.MqttClient()
+    mqtt_client.connect_to_ev3()
     window = tkinter.Tk()
     window.title = "EV3 controller"
 
@@ -47,7 +133,7 @@ def main():
     instructions = "Click the window to make path for robot"
     label = ttk.Label(main_frame, text=instructions)
     label.grid(columnspan=2)
-    canvas = tkinter.Canvas(main_frame, background="lightgray", width=1000,
+    canvas = tkinter.Canvas(main_frame, background="lightgray", width=900,
                             height=600)
     canvas.grid(columnspan=2)
     drawer = Drawer(canvas)
@@ -65,13 +151,11 @@ def main():
     start_button.grid(row=3, column=1)
     start_button["command"] = lambda: start_path(drawer, mqtt_client)
 
-    window.mainloop()
-
 
 def add_path(event, drawer):
     # add point and connect each points with line
-    print("You clicked location ({},{})".format(event.x, event.y))
-    my_color = "black"
+    print(" Click location at ({},{})".format(event.x, event.y))
+    my_color = "blue"
     drawer.draw_circle(my_color, event.x, event.y)
     drawer.point_list.append(event)
 
@@ -122,6 +206,8 @@ def start_path(drawer, mqtt_client):
         mqtt_client.send_message("drive_inches", [drawer.distance_list[k],
                                                   900])
         print(angle_new_list[k], drawer.distance_list[k])
+
+
 
 
 
