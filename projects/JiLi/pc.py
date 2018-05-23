@@ -21,13 +21,12 @@ def window():
     continue_button = ttk.Button(main_frame2, text="Continue")
     continue_button.grid(row=4, column=3)
     continue_button['command']=lambda: next_window()
-
     window.mainloop()
 
 
 def next_window():
     main()
-    exit()
+
 
 
 def main():
