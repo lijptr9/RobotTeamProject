@@ -14,6 +14,7 @@
 import ev3dev.ev3 as ev3
 import time
 import math
+from random import randint
 
 
 class Snatch3r(object):
@@ -38,6 +39,8 @@ class Snatch3r(object):
 
         self.pixy = ev3.Sensor(driver_name="pixy-lego")
         assert self.pixy
+
+        self.beacon_seeker = ev3.BeaconSeeker(channel=1)
 
 
     def drive_inches(self, distance, speed):
@@ -227,17 +230,59 @@ class Snatch3r(object):
 
 #----------------------------------------------------------------------------------------------------------------------
 # JI LI
-
     def go_fetch(self):
+        Red = ev3.ColorSensor.COLOR_RED
+        back_button = ev3.Button().on_backspace
+        while not back_button.is_pressed:
 
-            found_beacon = self.seek_beacon()
-            if found_beacon:
+            if self.ir_sensor.proximity <= 60:
+                while self.color_sensor.color != Red:
+                    print(self.ir_sensor.proximity)
+                    self.left_motor.run_forever(speed_sp= randint(100, 800))
+                    self.right_motor.run_forever(speed_sp= randint(-100, -800))
                 self.arm_up()
-                ev3.Sound.speak('i find the ball')
-                assert self.left_motor.connected
-                assert self.right_motor.connected
-                self.left_motor.run_forever(speed_sp=600)
-                self.right_motor.run_forever(speed_sp=600)
-                time.sleep(5)
-                self.left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
-                self.right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+                ev3.Sound.speak('i find it').wait()
+                self.stop()
+            else:
+                self.left_motor.run_forever(speed_sp= 500)
+                self.right_motor.run_forever(speed_sp= 500)
+
+
+    def come_back(self):
+        forward_speed = 300
+        turn_speed = 100
+        back_button = ev3.Button().on_backspace
+        while not back_button.is_pressed:
+            current_heading = self.beacon_seeker.heading  # use the beacon_seeker heading
+            current_distance = self.beacon_seeker.distance  # use the beacon_seeker distance
+            if current_distance == -128:
+                # If the IR Remote is not found just sit idle for this program until it is moved.
+                print("IR Remote not found. Distance is -128")
+                self.stop()
+            else:
+                if math.fabs(current_heading) < 2:
+                    print("On the right heading. Distance: ", current_distance)
+                    if current_distance == 0:
+                        print("You have found the beacon!")
+                        ev3.Sound.speak('i am here')
+                        self.arm_down()
+                        self.stop()
+                        time.sleep(0.01)
+                        return True
+                    if current_distance > 0:
+                        print("Drive forward")
+                        self.go_forward(forward_speed, forward_speed)
+                if 10 > math.fabs(current_heading) >= 2:
+                    print("Adjusting heading: ", current_heading)
+                    if current_heading < 0:
+                        print("Spin left")
+                        self.turn_left(turn_speed, turn_speed)
+                    if current_heading > 0:
+                        print("Spin right")
+                        self.turn_right(turn_speed, turn_speed)
+                if math.fabs(current_heading) > 10:
+                    print("Heading is too far off to fix", current_heading)
+                    self.stop()
+                    time.sleep(0.01)
+            time.sleep(0.2)
+        self.stop()
