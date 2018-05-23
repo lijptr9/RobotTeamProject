@@ -3,13 +3,38 @@ from tkinter import ttk
 
 import mqtt_remote_method_calls as com
 
+def window():
+    window = tkinter.Tk()
+    window.title='CSSE120 Final Project'
+    main_frame2 = ttk.Frame(window, padding=5)
+    main_frame2.grid()
+
+    canvas=tkinter.Canvas(main_frame2, background="white", width=500, height=400)
+    canvas.grid(columnspan=4)
+    canvas.grid(rowspan=4)
+
+    canvas.create_text(250, 150, fill="darkblue", font="Times 20 italic bold",
+                            text="CSSE120 Final Project")
+    canvas.create_text(255, 180, fill="darkblue", font="Times 20 italic bold",
+                       text="Dog Fun")
+
+    continue_button = ttk.Button(main_frame2, text="Continue")
+    continue_button.grid(row=4, column=3)
+    continue_button['command']=lambda: next_window()
+
+    window.mainloop()
+
+
+def next_window():
+    main()
+    exit()
+
 
 def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
-
     root = tkinter.Tk()
-    root.title("Control Pad")
+    root.title("Send command to dog")
 
     main_frame = ttk.Frame(root, padding=40, relief='raised')
     main_frame.grid()
@@ -60,6 +85,4 @@ def send_down(mqtt_client):
     print("arm_down")
     mqtt_client.send_message("arm_down")
 
-
-
-main()
+window()
