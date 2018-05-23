@@ -231,3 +231,15 @@ class Snatch3r(object):
 # JI LI
 
     def go_fetch(self):
+
+            found_beacon = self.seek_beacon()
+            if found_beacon:
+                self.arm_up()
+                ev3.Sound.speak('i find the ball')
+                assert self.left_motor.connected
+                assert self.right_motor.connected
+                self.left_motor.run_forever(speed_sp=600)
+                self.right_motor.run_forever(speed_sp=600)
+                time.sleep(5)
+                self.left_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+                self.right_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)

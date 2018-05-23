@@ -30,6 +30,15 @@ def main():
     stop_button.grid(row=3, column=2)
     stop_button['command'] = lambda: send_stop(mqtt_client)
 
+
+    up_button = ttk.Button(main_frame, text="Pick it up")
+    up_button.grid(row=4, column=0)
+    up_button['command'] = lambda: send_up(mqtt_client)
+
+    down_button = ttk.Button(main_frame, text="Put it down")
+    down_button.grid(row=4, column=2)
+    down_button['command'] = lambda: send_down(mqtt_client)
+
     quit_button = ttk.Button(main_frame, text="Quit")
     quit_button.grid(row=1, column=1)
     quit_button['command'] = (lambda: quit_program(mqtt_client, False))
@@ -58,6 +67,15 @@ def send_comeback(mqtt_client):
 def send_stop(mqtt_client):
     print("stop")
     mqtt_client.send_message("stop")
+
+def send_up(mqtt_client):
+    print("arm_up")
+    mqtt_client.send_message("arm_up")
+
+
+def send_down(mqtt_client):
+    print("arm_down")
+    mqtt_client.send_message("arm_down")
 
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
