@@ -42,7 +42,6 @@ class Snatch3r(object):
 
         self.beacon_seeker = ev3.BeaconSeeker(channel=1)
 
-
     def drive_inches(self, distance, speed):
         assert self.left_motor.connected
         assert self.right_motor.connected
@@ -71,7 +70,6 @@ class Snatch3r(object):
     def stop(self):
         assert self.left_motor.connected
         assert self.right_motor.connected
-        ev3.Sound.beep().wait()
         self.right_motor.stop()
         self.left_motor.stop()
 
@@ -103,7 +101,7 @@ class Snatch3r(object):
     def arm_down(self):
         """make the robot's arm going down"""
         assert self.arm_motor.connected
-        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=-900)
+        self.arm_motor.run_to_abs_pos(position_sp=-5100, speed_sp=-900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
@@ -231,18 +229,19 @@ class Snatch3r(object):
 #----------------------------------------------------------------------------------------------------------------------
 # JI LI
     def go_fetch(self):
-        Red = ev3.ColorSensor.COLOR_RED
-        back_button = ev3.Button().on_backspace
-        while not back_button.is_pressed:
-
+        assert self.left_motor.connected
+        assert self.right_motor.connected
+        white = ev3.ColorSensor.COLOR_WHITE
+        while not self.touch_sensor.is_pressed:
             if self.ir_sensor.proximity <= 60:
-                while self.color_sensor.color != Red:
+                if self.color_sensor.color == white:
+                    self.arm_up()
+                    ev3.Sound.speak('i find it').wait()
                     print(self.ir_sensor.proximity)
-                    self.left_motor.run_forever(speed_sp= randint(100, 800))
-                    self.right_motor.run_forever(speed_sp= randint(-100, -800))
-                self.arm_up()
-                ev3.Sound.speak('i find it').wait()
-                self.stop()
+                    self.stop()
+                else:
+                    self.left_motor.run_forever(speed_sp= randint(100, 601))
+                    self.right_motor.run_forever(speed_sp= randint(-600, -99))
             else:
                 self.left_motor.run_forever(speed_sp= 500)
                 self.right_motor.run_forever(speed_sp= 500)
@@ -251,8 +250,7 @@ class Snatch3r(object):
     def come_back(self):
         forward_speed = 300
         turn_speed = 100
-        back_button = ev3.Button().on_backspace
-        while not back_button.is_pressed:
+        while self.touch_sensor.is_pressed:
             current_heading = self.beacon_seeker.heading  # use the beacon_seeker heading
             current_distance = self.beacon_seeker.distance  # use the beacon_seeker distance
             if current_distance == -128:
@@ -268,7 +266,6 @@ class Snatch3r(object):
                         self.arm_down()
                         self.stop()
                         time.sleep(0.01)
-                        return True
                     if current_distance > 0:
                         print("Drive forward")
                         self.go_forward(forward_speed, forward_speed)
