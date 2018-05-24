@@ -14,7 +14,6 @@
 import ev3dev.ev3 as ev3
 import time
 import math
-from random import randint
 
 
 class Snatch3r(object):
@@ -228,15 +227,14 @@ class Snatch3r(object):
     def go_fetch(self):
         white = ev3.ColorSensor.COLOR_WHITE
         while not self.touch_sensor.is_pressed:
-            if self.ir_sensor.proximity <= 30:
+            if self.ir_sensor.proximity <= 40:
                 if self.color_sensor.color == white:
                     self.arm_up()
                     ev3.Sound.speak('i find it').wait()
-                    print(self.ir_sensor.proximity)
                     self.stop()
                 else:
-                    self.left_motor.run_forever(speed_sp= randint(100, 601))
-                    self.right_motor.run_forever(speed_sp= randint(-600, -99))
+                    self.left_motor.run_forever(speed_sp= 300)
+                    self.right_motor.run_forever(speed_sp= -300)
             else:
                 self.left_motor.run_forever(speed_sp= 500)
                 self.right_motor.run_forever(speed_sp= 500)
