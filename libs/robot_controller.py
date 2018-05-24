@@ -101,7 +101,7 @@ class Snatch3r(object):
     def arm_down(self):
         """make the robot's arm going down"""
         assert self.arm_motor.connected
-        self.arm_motor.run_to_abs_pos(position_sp=-5100, speed_sp=-900)
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=-900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
@@ -226,11 +226,9 @@ class Snatch3r(object):
 #----------------------------------------------------------------------------------------------------------------------
 # JI LI
     def go_fetch(self):
-        assert self.left_motor.connected
-        assert self.right_motor.connected
         white = ev3.ColorSensor.COLOR_WHITE
         while not self.touch_sensor.is_pressed:
-            if self.ir_sensor.proximity <= 60:
+            if self.ir_sensor.proximity <= 30:
                 if self.color_sensor.color == white:
                     self.arm_up()
                     ev3.Sound.speak('i find it').wait()
@@ -257,13 +255,13 @@ class Snatch3r(object):
             else:
                 if math.fabs(current_heading) < 2:
                     print("On the right heading. Distance: ", current_distance)
-                    if current_distance == 0:
+                    if current_distance <= 4:
                         print("You have found the beacon!")
                         ev3.Sound.speak('i am here')
                         self.arm_down()
                         self.stop()
                         time.sleep(0.01)
-                    if current_distance > 0:
+                    if current_distance > 4:
                         print("Drive forward")
                         self.go_forward(forward_speed, forward_speed)
                 if 10 > math.fabs(current_heading) >= 2:
